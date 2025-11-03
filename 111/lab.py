@@ -1,82 +1,53 @@
-import os
+# -*- coding: utf-8 -*-
 
-# Визначимо імена файлів
-file_name_1 = "TF12_1.txt"
-file_name_2 = "TF12_2.txt"
+# Визначаємо ім'я файлу, з яким будемо працювати
+FILE_NAME = "task_exchange.txt"
+STUDENT_LASTNAME = "Мамонтов"
 
-# === а) Створення файлу TF12_1 ===
-print(f"a) Створення файлу '{file_name_1}'...")
-try:
-    # Дані для запису (рядки різної довжини)
-    data_for_file_1 = [
-        "Це перший рядок файлу.\n",
-        "А це другий рядок файлу.\n",
-        "Це вже третій.\n",
-        "Ще трішки. Це четвертий рядок, "
-        "Вже п'ятий рядок.\n",
-        "Кінець!"
-    ]
-    
-    with open(file_name_1, 'w', encoding='utf-8') as f:
-        f.writelines(data_for_file_1)
+# Питання для наступного студента
+QUESTION_TEXT = (
+    "Чим відрізняються `list` (список) та `tuple` (кортеж) у Python? \n"
+    "Опишіть їхні основні властивості (змінність/незмінність), \n"
+    "синтаксис та наведіть приклади, коли доцільно використовувати \n"
+    "кожен із цих типів даних."
+)
+
+def create_initial_file(filename, lastname, question):
+    """
+    Створює початковий файл, записує прізвище та питання.
+    Використовує режим 'w' (write) для створення нового файлу 
+    або перезапису існуючого.
+    """
+    print(f"Спроба створити та записати дані у файл: {filename}")
+    try:
+        # 'with open(...)' - це менеджер контексту, який гарантує,
+        # що файл буде автоматично закрито, навіть якщо виникне помилка.
+        # 'encoding='utf-8'' - важливо для коректного запису кирилиці.
+        with open(filename, 'w', encoding='utf-8') as f:
+            
+            # Записуємо блок інформації першого студента
+            f.write("--- Студент 1 ---\n")
+            f.write(f"Прізвище: {lastname}\n")
+            f.write("Питання:\n")
+            f.write(f"{question}\n")
+            f.write("-------------------\n\n") # Розділювач для наступного студента
+            
+        print(f"Файл '{filename}' успішно створено та записано.")
+
+    except PermissionError:
+        # Ця помилка виникає, якщо у програми немає прав
+        # на запис у вказану директорію.
+        print(f"ПОМИЛКА: Недостатньо прав для запису у файл '{filename}'.")
+        print("Перевірте права доступу або запустіть скрипт з правами адміністратора.")
         
-    print(f"Файл '{file_name_1}' успішно створено.")
-
-except IOError as e:
-    print(f"Помилка при створенні файлу {file_name_1}: {e}")
-    # Якщо файл не створився, подальші кроки не мають сенсу
-    exit()
-
-# === б) Читання TF12_1 та запис у TF12_2 ===
-print(f"\nб) Читання з '{file_name_1}' та запис у '{file_name_2}'...")
-try:
-    # Читаємо ВЕСЬ вміст файлу TF12_1 в одну велику змінну
-    with open(file_name_1, 'r', encoding='utf-8') as f_in:
-        content = f_in.read()
-
-    # Записуємо у файл TF12_2 за потрібним шаблоном
-    with open(file_name_2, 'w', encoding='utf-8') as f_out:
-        current_index = 0  # Поточна позиція у 'content'
-        line_length = 1    # Довжина рядка, яку потрібно записати (1, 2, ... 10)
+    except IOError as e:
+        # Загальна помилка вводу/виводу (наприклад, якщо диск переповнений)
+        print(f"ПОМИЛKA вводу/виводу: {e}")
         
-        while current_index < len(content):
-            # Вирізаємо шматок тексту
-            # content[start:end]
-            chunk = content[current_index : current_index + line_length]
-            
-            # Записуємо шматок у файл з додаванням нового рядка
-            f_out.write(chunk + '\n')
-            
-            # Оновлюємо індекс
-            current_index += line_length
-            
-            # Оновлюємо довжину для наступного рядка
-            line_length += 1
-            if line_length > 10:
-                line_length = 1  # Скидаємо лічильник назад до 1
-                
-    print(f"Файл '{file_name_2}' успішно заповнено за шаблоном.")
+    except Exception as e:
+        # Обробка будь-яких інших неочікуваних помилок
+        print(f"Виникла неочікувана помилка: {e}")
 
-except FileNotFoundError:
-    print(f"Помилка: Вхідний файл '{file_name_1}' не знайдено.")
-except IOError as e:
-    print(f"Помилка при читанні/записі файлів: {e}")
-    exit()
-
-# === в) Читання вмісту TF12_2 та друк ===
-print(f"\nв) Друк вмісту файлу '{file_name_2}':")
-print("-" * (30 + len(file_name_2)))
-try:
-    with open(file_name_2, 'r', encoding='utf-8') as f:
-        for line in f:
-            # Використовуємо end='', щоб print не додавав свій символ 
-            # нового рядка, оскільки line вже містить його
-            print(line, end='')
-
-    print(f"\n" + "-" * (30 + len(file_name_2)))
-    print("Друк файлу завершено.")
-
-except FileNotFoundError:
-    print(f"Помилка: Файл '{file_name_2}' не знайдено.")
-except IOError as e:
-    print(f"Помилка при читанні файлу {file_name_2}: {e}")
+# --- Запуск функції ---
+if __name__ == "__main__":
+    create_initial_file(FILE_NAME, STUDENT_LASTNAME, QUESTION_TEXT)
