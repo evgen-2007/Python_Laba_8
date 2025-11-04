@@ -51,3 +51,48 @@ def create_initial_file(filename, lastname, question):
 # --- Запуск функції ---
 if __name__ == "__main__":
     create_initial_file(FILE_NAME, STUDENT_LASTNAME, QUESTION_TEXT)
+
+# Другий студент Ткаченко
+FILE_NAME = "task_exchange.txt"
+STUDENT_LASTNAME = "Ткаченко"
+
+# Відповідь на питання
+ANSWER_TEXT = (
+    "Відповідь:\n"
+    "У Python список (list) - це змінна послідовність елементів, що створюється за допомогою квадратних дужок [] і дозволяє додавати, видаляти чи змінювати значення.\n"
+    "Списки доцільно використовувати тоді, коли потрібно змінювати вміст.\n"
+    "tuple) — незмінна послідовність, яка створюється за допомогою круглих дужок (), і після створення її вміст не можна змінити.\n"
+    "Кортежі доцільно використовувати для збереження фіксованих наборів даних, наприклад координат або констант."
+)
+
+# Питання для наступного третього студента
+QUESTION_TEXT = (
+    "Що таке словник (dict) у Python? Опишіть його структуру, "
+     "та наведіть приклади використання."
+)
+
+def append_to_file(filename, lastname, answer, question):
+    print(f"Спроба доповнити файл: {filename}")
+    try:
+        with open(filename, 'a', encoding='utf-8') as f:
+            f.write("--- Студент 2 ---\n")
+            f.write(f"Прізвище: {lastname}\n")
+            f.write(f"{answer}\n\n")
+            f.write("Питання:\n")
+            f.write(f"{question}\n")
+            f.write("-------------------\n\n")
+        print(f"Дані студента '{lastname}' успішно додано у файл '{filename}'.")
+
+    except FileNotFoundError:
+        print(f"ПОМИЛКА: файл '{filename}' не знайдено. "
+              "Перевірте, чи перший студент створив його.")
+
+    except IOError as e:
+        print(f"ПОМИЛКА вводу/виводу: {e}")
+
+    except Exception as e:
+        print(f"Виникла неочікувана помилка: {e}")
+
+# --- Запуск функції ---
+if __name__ == "__main__":
+    append_to_file(FILE_NAME, STUDENT_LASTNAME, ANSWER_TEXT, QUESTION_TEXT)
