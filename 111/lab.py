@@ -112,6 +112,7 @@ def append_to_file(filename, lastname, answer, question):
 
 # --- Запуск функції ---
 # Цей блок коду виконається, коли ви запустите цей файл
-if name == "main":
+if __name__ == "__main__":
     append_to_file(FILE_NAME, STUDENT_LASTNAME, ANSWER_TEXT, QUESTION_TEXT)
+
 
