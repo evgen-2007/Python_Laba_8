@@ -10,7 +10,6 @@ QUESTION_TEXT = (
     "Опишіть їхні основні властивості (змінність/незмінність), \n"
     "синтаксис та наведіть приклади, коли доцільно використовувати \n"
     "кожен із цих типів даних."
-    "ррр"
 )
 
 def create_initial_file(filename, lastname, question):
@@ -52,4 +51,5 @@ def create_initial_file(filename, lastname, question):
 # --- Запуск функції ---
 if __name__ == "__main__":
     create_initial_file(FILE_NAME, STUDENT_LASTNAME, QUESTION_TEXT)
+
 
