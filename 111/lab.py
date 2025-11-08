@@ -219,8 +219,7 @@ def append_to_file_s4(filename, lastname, question_content, answer_content):
         with open(filename, 'a', encoding='utf-8') as f:
             
             f.write("--- Студент 4 ---\n")
-            f.write(f"Прізви
-: {lastname}\n")
+            f.write(f"Прізвище: {lastname}\n") 
             f.write("\n*** ЗАПИТАННЯ: ***\n")
             f.write(question_content + "\n")
             f.write("\n*** ВІДПОВІДЬ: ***\n")
@@ -241,3 +240,4 @@ def append_to_file_s4(filename, lastname, question_content, answer_content):
 
 if __name__ == "__main__":
     append_to_file_s4(FILE_NAME, STUDENT_LASTNAME, QUESTION_TEXT, ANSWER_TEXT)
+
